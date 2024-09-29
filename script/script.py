@@ -3,15 +3,18 @@ from sklearn.preprocessing import MinMaxScaler
 from minisom import MiniSom
 import matplotlib.pyplot as plt
 
-# Load the dataset (replace with the actual path)
-df = pd.read_csv("C:/Users/vijay/OneDrive/Desktop/SOM Proj/data/destinations.csv", encoding='ISO-8859-1')
+# Set the path to the dataset file (using raw string)
+file_path = r"C:\Users\vijay\OneDrive\Desktop\SOM Proj\data\destinations.csv"
 
+# Load the dataset with specified encoding
+# Try 'latin1' or 'ISO-8859-1' or 'utf-16' if needed
+df = pd.read_csv(file_path, encoding='latin1')  # Change encoding if necessary
 
 # Preprocess the data: Select numeric columns, adjust depending on your dataset structure
 data = df.select_dtypes(include=[float, int]).values
 
 # Normalize the data using MinMaxScaler
-scaler = MinMaxScaler()
+scaler = MinMaxScaler()  # Define the scaler here
 data_scaled = scaler.fit_transform(data)
 
 # Initialize and train the Self-Organizing Map (SOM)
@@ -35,7 +38,7 @@ colors = ['r', 'g']
 
 for i, x in enumerate(data_scaled):
     w = som.winner(x)  # Get the winning neuron
-    plt.plot(w[0] + 0.5, w[1] + 0.5, markers[i % len(markers)], markerfacecolor='None', markeredgecolor=colors[i % len(colors)],  markersize=10, markeredgewidth=2)
+    plt.plot(w[0] + 0.5, w[1] + 0.5, markers[i % len(markers)], markerfacecolor='None', markeredgecolor=colors[i % len(colors)], markersize=10, markeredgewidth=2)
 
 # Show the plot
 plt.show()
